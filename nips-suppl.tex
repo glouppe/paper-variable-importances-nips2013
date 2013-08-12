@@ -1,0 +1,521 @@
+% Packages =====================================================================
+
+\documentclass{article}
+\usepackage{nips13submit_e}
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[authoryear]{natbib}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{auto-pst-pdf}
+\usepackage{pst-plot}
+\usepackage{floatrow}
+\usepackage[font=small,labelfont=bf]{caption}
+
+
+
+% Various settings =============================================================
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\usepackage{xr}
+\externaldocument{nips}
+
+\newcommand{\lwh}[1]{\textcolor{blue}{#1}}
+
+
+
+% Title ========================================================================
+
+\title{\textbf{Understanding variable importances\\
+in forests of randomized trees\\
+\textit{Supplementary materials}}}
+
+\author{
+Gilles Louppe$^{a}$, Louis Wehenkel$^{a}$, Antonio Sutera$^{b}$ and Pierre Geurts$^{a}$ \\
+Dept. of EE \& CS, University of Liège, Belgium \\
+$^{a}$: \texttt{\{g.louppe, l.wehenkel, p.geurts\}@ulg.ac.be}\\
+$^{b}$: \texttt{antonio.sutera@student.ulg.ac.be}\\
+% \And
+% Louis Wehenkel \\
+% University of Liège, Belgium \\
+% \texttt{l.wehenkel@ulg.ac.be} \\
+% % \And
+% % Antonio Sutera \\
+% % University of Liège, Belgium \\
+% % \texttt{antonio.sutera@student.ulg.ac.be} \\
+% \And
+% Pierre Geurts \\
+% University of Liège, Belgium \\
+% \texttt{p.geurts@ulg.ac.be} \\
+}
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\nipsfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+\maketitle
+\allowdisplaybreaks
+
+
+
+% Appendix =====================================================================
+
+\appendix
+
+
+% ------------------------------------------------------------------------------
+
+\section{Notations, and definitions of entropies and mutual information}
+
+To be self-contained, we first recall several definitions from information theory (see \cite{cover2012elements}, for further properties).
+
+We suppose that we are given a probability space $(\Omega, {\cal E}, \mathbb{P})$ and  consider random variables
+defined on it taking a finite number of possible values. We use upper case letters to denote such random variables (e.g. $X, Y, Z, W \ldots$)  and calligraphic letters (e.g. $\cal X, Y, Z, W \ldots$) to denote their image sets (of finite cardinality), and lower case letters (e.g. $x, y, z, w \ldots$) to denote one of their possible values.
+For a (finite) set of (finite) random variables $ X = \{X_{1}, \ldots , X_{i}\}$, we denote by $P_{X}(x) = P_{X}(x_{1}, \ldots , x_{i})$ the probability $\mathbb{P}(\{ \omega \in \Omega \mid  \forall \ell : 1, \ldots, i: X_{\ell}(\omega) =x_{\ell}\})$, and by ${\cal X} = {\cal X}_{1} \times \cdots \times {\cal X}_{i}$ the set of joint configurations of these random variables. Given two sets of random variables, $X = \{X_{1}, \ldots , X_{i}\}$ and $Y=\{Y_{1}, \ldots , Y_{j}\}$, we denote by $P_{X \mid Y}(x \mid y) = {P_{X, Y} (x,  y)}/ {P_{Y}(y)}$ the conditional density of $X$ with respect to $Y$.\footnote{To avoid problems, we suppose that all probabilities are strictly positive, without fundamental limitation.}
+
+With these notations, the joint (Shannon) entropy of a set of random variables $X =\{X_{1}, \ldots , X_{i}\}$ is thus defined by
+\begin{equation*}
+H(X)  = - \sum_{x \in {\cal X}}P_{X} (x)\log_{2}P_{X }(x),
+\end{equation*}
+while the mean conditional entropy of a set of random variables $X = \{X_{1}, \ldots , X_{i}\}$, given the values of another set of random variables $Y=\{Y_{1}, \ldots , Y_{j}\}$ is defined by
+\begin{equation*}
+H(X\mid Y) = - \sum_{x \in {\cal X}} \sum_{y \in {\cal Y}} P_{X, Y} (x, y) \log_{2} P_{X \mid Y} (x  \mid y).
+ \end{equation*}
+The mutual information among the set of random variables $X =\{X_{1}, \ldots , X_{i}\}$ and the set of random variables $Y=\{Y_{1}, \ldots , Y_{j}\}$ is defined by
+ \begin{eqnarray*}
+ I(X; Y) & = &- \sum_{x \in {\cal X}} \sum_{y \in {\cal Y}} P_{X, Y} (x, y) \log_{2} \frac{P_{X}(x) P_{Y}(y)}{P_{X,Y}(x,y)} \\
+ & = & H(X) - H(X \mid Y) \\
+ & = &  H(Y) - H(Y \mid X).
+ \end{eqnarray*}
+ The mean conditional mutual information among the set of random variables $X =\{X_{1}, \ldots , X_{k}\}$ and the set of random variables $Y=\{Y_{1}, \ldots , Y_{j}\}$, given the values of a third set of random variables $Z=\{Z_{1}, \ldots , Z_{i}\}$, is defined by
+ \begin{eqnarray*}
+ I(X; Y \mid Z) &= &H(X \mid Z) - H(X \mid Y, Z)\\
+ & = & H(Y \mid Z) - H(Y \mid X, Z)\\
+& = & - \sum_{x \in {\cal X}} \sum_{y \in {\cal Y}} \sum_{z \in {\cal Z}} P_{X, Y, Z} (x, y, z) \log_{2} \frac{P_{X \mid Z}(x \mid z) P_{Y\mid Z}(y \mid z)}{P_{X,Y \mid Z}(x,y \mid z)} .
+\end{eqnarray*}
+
+We also recall the chaining rule
+\begin{equation*}
+I(X, Z ; Y \mid W ) = I(X; Y \mid W  ) + I( Z ; Y \mid W, X),
+\end{equation*}
+and the symmetry of the (conditional) mutual information among sets of random variables
+\begin{equation*}
+I(X ; Y \mid Z) = I(Y ;  X  \mid Z).
+\end{equation*}
+
+
+\section{Proof of Theorem~\ref{thm:imp}}
+\label{app:thm:imp}
+
+\begin{proof}
+Let us define $p(t)$ as the proportion $N_t / N$ of samples from ${\cal L}$
+reaching node $t$ and $p(j|t)$ as the proportion $N_{jt} / N_t$ of samples
+of class $j$ in $t$. By expanding Equation~\ref{eq:deltaimpurity} into
+Equation~\ref{eq:mdi} and using the entropy $H(Y|t) = -\sum_j p(j|t) \log_2(p(j|t))$
+as impurity measure $i(t)$, Equation~\ref{eq:mdi} can be rewritten in terms of
+mutual information:
+\begin{equation*}
+Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) I(Y;X_m|t)
+\end{equation*}
+
+As the size $N$ of the training sample grows to infinity,
+$p(t)$ becomes the (exact) probability (according to $P(X_1,\ldots,X_p,Y)$) that
+an object reaches node $t$, i.e., a probability $P(B(t)=b(t))$ where $B(t)=(X_{i_1}, ..., X_{i_{k}})$ is
+the subset of $k$ variables tested in the branch from the root node to the parent of $t$ and
+$b(t)$ is the vector of values of these variables. As the the number $N_T$ of
+totally randomized trees also grows to infinity, the importance of a variable
+$X_m$ can then be written:
+\begin{equation*}
+Imp(X_m)=\sum_{B\subseteq V^{-m}} \sum_{b\in {\cal X}_{i_1}\times ... \times {\cal X}_{i_{k}} } \alpha(B,b,X_m,p) P(B=b) I(Y;X_m|B=b),
+\end{equation*}
+where $b$ is a set of values for the variables in $B$ and $\alpha(B,b,X_m,p)$ is
+the probability that a node $t$ (at depth $k$) in a totally randomized tree
+tests the variable $X_m$ and is such that $B(t)=B$ and $b(t)=b$.
+
+Let us compute $\alpha(B,b,X_m,p)$. First, let us consider the probability that
+a node $t$ tests the variable $X_m$ and is such that the branch leading to $t$
+follows a path defined, in that particular order, by all $k$ variables $X_{i_1},
+..., X_{i_{k}} \in B$ and their corresponding values in $b$. The probability of
+that branch is the probability of picking (uniformly at random)  $X_{i_1}$  at
+the root node times the probability of testing, in that order, the remaining
+$X_{i_2}, ..., X_{i_{k}}$ variables in the sub-tree corresponding to the value
+$x_{i_1}$ of $X_{i_1}$ defined in $b$. Note that, by construction, it is certain
+that this particular sub-tree exists since the root node is split into $|{\cal
+X}_{i_1}|$ sub-trees.  Then, the
+probability of testing $X_m$ at the end of this branch is the probability of
+picking $X_m$ among the remaining $p-k$ variables. By recursion, we thus have:
+$$\frac{1}{p} \frac{1}{p-1} ... \frac{1}{p-k+1} \frac{1}{p-k} =
+\frac{(p-k)!}{p!} \frac{1}{p-k}$$
+
+Since the order along which the variables appear in the branch is of no
+importance, $\alpha(B,b,X_m,p)$ actually includes all $k!$ equiprobable ways of
+building a branch composed of the variables and values in $B$ and $b$. Then,
+since a tree may at most contain a single such branch, whatever the order of the
+tests, the probabilities may be added up and it comes:
+\begin{equation*}
+\alpha(B,b,X_m,p)=k! \frac{(p-k)!}{p!} \frac{1}{p-k} = \frac{1}{C_p^k} \frac{1}{p-k}
+\end{equation*}
+
+From the above expression, it appears that $\alpha(B,b,X_m,p)$ depends only on
+the size $k$ of $B$ and on the number $p$ of variables. As such, by grouping in
+the previous equation of $Imp(X_m)$ conditioning variable subsets $B$ according
+to their sizes and using the definition of conditional mutual information,
+$\alpha$ can be factored out, hence leading to the form foretold by Theorem~\ref{thm:imp}:
+\begin{equation*}
+Imp(X_m)=\sum_{k=0}^{p-1} \frac{1}{C^k_p} \frac{1}{p-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B).
+\end{equation*}
+\end{proof}
+
+
+
+% ------------------------------------------------------------------------------
+
+
+\section{Proof of Theorem~\ref{thm:sum-of-imp}}
+\label{app:thm:sum-of-imp}
+
+\begin{proof}
+For any tree $T$, we have that the sum of all
+importances estimated by using an infinitely large sample $\cal L$ (or
+equivalently, by assuming perfect knowledge of the joint distribution $P(X_1,
+..., X_p, Y)$) is equal to $H(Y) - \sum_{l \in \ell(T)} p(l) H(Y|b(l))$, where
+$\ell(T)$ denotes the set of all leaves of $T$, and where $b(l)$  denotes the
+joint configuration of all input variables leading to leaf $l$. This is true because the impurities of all test nodes intervening in the computation of the variable importances, except the impurity $H(Y)$ at the root node of the tree, cancel each other when summing up the importances.
+
+Since, when the tree is fully developed,
+$\sum_{l \in \ell(T)} p(l) H(Y|b(l))$ is obviously equal to the mean conditional entropy
+$H(Y | X_{1}, \ldots, X_{p})$ of $Y$ given all input variables, this implies
+that for any fully developed tree we have that the sum of variable importances
+is equal to $I(X_{1}, \ldots, X_{p} ; Y)$, and so this relation also holds when
+averaging over an infinite ensemble of totally randomized trees.
+\end{proof}
+
+
+% ------------------------------------------------------------------------------
+
+\section{Proof of Theorem~\ref{thm:irrelevant}}
+\label{app:thm:irrelevant}
+
+\begin{proof}
+The proof directly results from the definition of irrelevance. If $X_i$ is
+irrelevant with respect to $V$, then $I(X_i;Y|B)$ is zero for all $B \subseteq
+V^{-i} \subset V$ and Equation~\ref{eqn:imp-full} reduces to $0$. Also, since
+$I(X_i;Y|B)$ is non-negative for any $B$, $Imp(X_i)$ is zero if and only if all
+its $I(X_i;Y|B)$ terms are zero. Since $Imp(X_i)$ includes all $I(X_i;Y|B)$
+terms for $B \subseteq V^{-i}$, and since all of them are therefore null if
+$Imp(X_i)=0$,  $X_i$ is thus, by definition, irrelevant with respect to
+$V^{-i}$. $X_i$ is then also trivially irrelevant with respect to $V=V^{-i} \cup
+\{X_i\}$ since $I(X_i;Y|B\cup\{X_i\})=0$ for any $B$.
+\end{proof}
+
+
+% ------------------------------------------------------------------------------
+
+\section{Proof of Lemma~\ref{lemma:adding-irrelevant}}
+\label{app:lemma:adding-irrelevant}
+
+\begin{proof}
+Let $X_i \notin V$ be an irrelevant variable with respect to $V$. For $X_m \in
+V$, $B \subseteq V^{-m}$, using the chain rules of mutual information, we have:
+\begin{eqnarray*}
+I(X_m, X_i;Y|B) &=& I(X_m;Y|B) + I(X_i;Y|B \cup \{X_m\}) \\
+                &=& I(X_i;Y|B) + I(X_m;Y|B \cup \{X_i\})
+\end{eqnarray*}
+If $X_i$ is irrelevant with respect to $V$, i.e., such that $I(X_i;Y|B)=0$ for
+all $B\subseteq V$, then $I(X_i;Y|B \cup \{X_m\})$ and $I(X_i;Y|B)$ both equal
+$0$, leading to
+\begin{eqnarray*}
+I(X_m;Y|B \cup \{X_i\}) = I(X_m;Y|B)
+\end{eqnarray*}
+
+Then, from Theorem~\ref{thm:imp}, the importance of $X_m$ as computed with an
+infinite ensemble of totally randomized trees built on $V\cup \{X_i\}$ can be
+simplified to:
+
+\begin{eqnarray*}
+  Imp(X_m)&=&\sum_{k=0}^{p-1+1} \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} \sum_{B \in {\cal P}_k(V^{-m} \cup \{X_i\})} I(X_m;Y|B)\\
+          &=&\sum_{k=0}^{p} \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} \left[ \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B) + \sum_{B \in {\cal P}_{k-1}(V^{-m})} I(X_m;Y|B \cup \{X_i\})  \right] \\
+          &=&\sum_{k=0}^{p-1} \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B) + \\
+          & &\hookrightarrow \sum_{k=1}^{p} \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} \sum_{B \in {\cal P}_{k-1}(V^{-m})} I(X_m;Y|B)\\
+          &=&\sum_{k=0}^{p-1} \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B) + \\
+          & &\hookrightarrow \sum_{k'=0}^{p-1} \frac{1}{C_{p+1}^{k'+1}} \frac{1}{p+1-k'-1} \sum_{B \in {\cal P}_{k'}(V^{-m})} I(X_m;Y|B)\\
+          &=&\sum_{k=0}^{p-1} \left[ \frac{1}{C_{p+1}^k} \frac{1}{p+1-k} + \frac{1}{C_{p+1}^{k+1}} \frac{1}{p-k} \right] \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)\\
+          &=&\sum_{k=0}^{p-1} \frac{1}{C^k_p} \frac{1}{p-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)\\
+\end{eqnarray*}
+
+The last line above exactly corresponds to the importance of $X_m$ as computed
+with an infinite ensemble of totally randomized trees built on $V$, which proves
+Lemma~\ref{lemma:adding-irrelevant}.
+\end{proof}
+
+
+% ------------------------------------------------------------------------------
+
+\section{Proof of Theorem~\ref{thm:relevant}}
+\label{app:thm:relevant}
+
+\begin{proof}
+Let us assume that $V_R$ contains $r \leq p$ relevant variables. If an infinite
+ensemble of totally randomized trees were to be built directly on those $r$
+variables then, from Theorem~\ref{thm:imp}, the importance of a relevant
+variable $X_m$ would be:
+\begin{equation*}%\label{eqn:imp-rel}
+  Imp(X_m)=\sum_{l=0}^{r-1} \frac{1}{C_r^l} \frac{1}{r-l} \sum_{B \in {\cal P}_l(V_R^{-m})} I(X_m;Y|B)
+\end{equation*}
+
+Let $X_i \in V \setminus V_R$ be one of the $p-r$ irrelevant variables in $V$
+with respect to $V$. Since $X_i$ is also irrelevant with respect to $V_R$, using
+Lemma~\ref{lemma:adding-irrelevant}, the importance of $X_m$ when the ensemble
+is built on $V_R \cup \{X_i\}$ is the same as the one computed on $V_R$ only
+(i.e., as computed by the equation above). Using the same argument,
+adding a second irrelevant variable $X_{i'}$ with respect to $V$ -- and therefore
+also with respect to $V_R \cup \{X_i\}$ -- and building an ensemble of totally
+randomized trees on $V_R \cup \{X_i\} \cup \{X_{i'}\}$ will yield importances
+that are the same as those computed on $V_R \cup \{X_i\}$, which are themselves
+the same as those computed by an ensemble built on $V_R$. By induction, adding
+all $p-r$ irrelevant variables has therefore no effect on the importance of
+$X_m$, which means that:
+
+\begin{equation*}%\label{eqn:imp-rel-equiv}
+  \begin{aligned}
+  Imp(X_m)&=\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)\\
+          &=\sum_{l=0}^{r-1} \frac{1}{C_r^l} \frac{1}{r-l} \sum_{B \in {\cal P}_l(V_R^{-m})} I(X_m;Y|B)\\
+  \end{aligned}
+\end{equation*}
+\end{proof}
+
+Intuitively, the independence with respect to irrelevant variables can be partly
+attributed to the fact that splitting at $t$ on some irrelevant variable $X_i$
+should only dilute the local importance $p(t) \Delta i(t)$ of a relevant
+variable $X_m$ into the children $t_L$ and $t_R$, but not affect the total sum.
+For instance, if $X_m$ was to be used at $t$, then the local importance would be
+proportional to $p(t)$. By contrast, if $X_i$ was to be used at $t$ and $X_m$ at
+$t_L$ and $t_R$, then the sum of the local importances for $X_m$ would be
+proportional to $p(t_L) + p(t_R)=p(t)$, which does not change anything.
+Similarly, one can recursively invoke the same argument if $X_m$ was to be used
+deeper in $t_L$ or $t_R$.
+
+
+
+% ------------------------------------------------------------------------------
+
+\section{Proof of Proposition~\ref{proposition:pruning}}
+\label{app:proposition:pruning}
+
+\begin{proof}
+The proof of Theorem~\ref{thm:imp} can be directly adapted to prove
+Proposition~\ref{proposition:pruning}. If the recursive procedure is stopped at
+depth $q$, then it means that $B(t)$ may include up to $q-1$ variables, which is
+strictly equivalent to summing from $k=0$ to $q-1$ in the outer sum of
+Equation~\ref{eqn:imp-full}.
+\end{proof}
+
+
+\section{Proof of Proposition~\ref{proposition:imp-subspaces}}
+\label{app:proposition:imp-subspaces}
+
+\begin{proof}
+Let us define a random subspace of size $q$ as a random subset $V_S \subseteq V$
+such that $|V_S|=q$. By replacing $p$ with $q$ in Equation~\ref{eqn:imp-full}
+(since each tree is built on $q$ variables) and adjusting by the probability
+$$\frac{C^{q-k-1}_{p-k-1}}{C^q_p}$$ of having selected $X_m$ and the $k$ variables in
+the branch when drawing $V_S$ prior to the construction of the tree, it comes:
+
+\begin{equation*}
+Imp(X_m)=\sum_{k=0}^{q-1} \frac{C^{q-k-1}_{p-k-1}}{C^q_p} \frac{1}{C_q^k} \frac{1}{q-k} \sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)
+\end{equation*}
+
+The multiplicative factor in the outer sum can then be simplified as follows:
+\begin{eqnarray*}
+\frac{C^{q-k-1}_{p-k-1}}{C^q_p} \frac{1}{C_q^k} \frac{1}{q-k} &=& \frac{\frac{(p-k-1)!}{(p-k)!(q-k-1)!}}{\frac{p!}{(p-q)!q!}} \frac{1}{C_q^k} \frac{1}{q-k}\\
+&=& \frac{(p-k-1)!q!}{(q-k-1)!p!} \frac{1}{C_q^k} \frac{1}{q-k} \\
+&=& \frac{q(q-1) ... (q-k)}{p(p-1) ... (p-k)} \frac{1}{C_q^k} \frac{1}{q-k}\\
+&=& \frac{q(q-1) ... (q-k)}{p(p-1) ... (p-k)} \frac{k!(q-k)!}{q!} \frac{1}{q-k}\\
+&=& \frac{1}{p(p-1) ... (p-k)} \frac{k!(q-k)!}{(q-k-1)!} \frac{1}{q-k}\\
+&=& \frac{k!}{p(p-1) ... (p-k)} \\
+&=& \frac{k!(p-k)!}{p!} \frac{1}{p-k} \\
+&=& \frac{1}{C^k_p} \frac{1}{p-k} \\
+\end{eqnarray*}
+which  yields the same importance as in Proposition~\ref{proposition:pruning} and proves the
+proposition.
+\end{proof}
+
+
+
+% ------------------------------------------------------------------------------
+
+\section{Generalization to other impurity measures}
+\label{app:generalization}
+
+In this appendix, we show that most of our results can be carried over
+to other impurity measures. We first sketch the proof that
+Theorems~\ref{thm:imp}, \ref{thm:irrelevant} and \ref{thm:relevant}
+hold generically, and then discuss the case of some common impurity
+measures.
+
+%\textcolor{red}{à retravailler}
+
+\subsection{Generalization of Theorems~\ref{thm:imp}, \ref{thm:irrelevant} and \ref{thm:relevant}}
+
+Let us consider a generic impurity measure $i(Y|t)$ and, by mimicking the
+notation used for conditional mutual information, let us denote by $G(Y;X_m|t)$
+the impurity decrease for a split on $X_m$ at node $t$:
+\begin{equation*}%\label{eqn:impsample}
+G(Y;X_m|t) = i(Y|t)-\sum_{x\in{\cal X}_m} p(t_x) i(Y|t_x),
+\end{equation*}
+where $t_{x}$ denotes the successor node of $t$ corresponding to value
+$x$ of $X_m$. The importance score associated to a variable $X_m$ (see
+Equation~\ref{eq:mdi}) is then rewritten:
+\begin{equation*}\label{eq:mdigen}
+Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) G(Y;X_m|t).
+\end{equation*}
+
+As explained in the proof of Appendix~\ref{app:thm:imp}, conditioning
+over a node $t$ is equivalent to conditioning over an event of the
+form $B(t)=b(t)$, where $B(t)$ and $b(t)$ denote respectively the set
+of variables tested in the branch from the root to $t$ and their
+values in this branch. When the learning sample size $N$ grows to
+infinity, this yields the following population based impurity decrease
+at node $t$:
+\begin{eqnarray*}
+&&G(Y;X_m|B(t)=b(t))\nonumber \\
+& = & i(Y|B(t)=b(t))-\sum_{x\in{\cal X}_m}
+P(X_m=x|B(t)=b(t)) i(Y|B(t)=b(t),X_m=x).\nonumber \\\label{eqn:imppop}
+\end{eqnarray*}
+Again by analogy with conditional entropy and mutual
+information\footnote{Note however that $G(Y;X_m|B)$ does not share all
+  properties of conditional mutual information as for example $G(X_m;
+  Y|B)$ might not be equal to $G(Y; X_m|B)$ or even be defined,
+  depending on the impurity measure and the nature of the output
+  $Y$.}, let us define $i(Y|B)$ and $G(Y;X_m|B)$ for some subset of
+variables $B\subseteq V$ as follows:
+\begin{eqnarray*}
+i(Y|B)&=&\sum_{b} P(B=b) i(Y|B=b)\\
+G(Y;X_m|B)&=& \sum_{b} P(B=b) G(Y;X_m|B=b)\\
+&=&i(Y|B)-i(Y|B,X_m)
+\end{eqnarray*}
+where the sums run over all possible combinations $b$ of values for
+the variables in $B$.
+
+With these notations, the proof of Theorem~\ref{thm:imp} can be easily adapted to lead
+to the following generalization of Equation~\ref{eqn:imp-full}:
+\begin{equation}
+Imp(X_m)=\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k} \sum_{B \in
+  {\cal P}_k(V^{-m})} G(Y;X_m|B).
+\end{equation}
+Note that this generalization is valid without any further specific constraints
+on the impurity measure $i(Y|t)$.
+
+Let us now define as {\it irrelevant to $Y$ with respect to $V$} a
+variable $X_i$ for which, for all $B\subseteq V$,
+$G(Y;X_i|B)=0$ (i.e. a variable that neither affects impurity
+whatever the conditioning). From this definition, one can deduce the
+following property of an irrelevant variable $X_i$ (for all
+$B\subseteq V$ and $X_m\in V$):
+$$G(Y;X_m|B\cup\{X_i\})=G(Y;X_m|B).$$
+
+Indeed, by a simple application of previous definitions, we have:
+\begin{eqnarray*}
+&&G(Y;X_m|B)-G(Y;X_m|B\cup\{X_i\})\nonumber\\
+& = & i(Y|B)-i(Y|B\cup\{X_m\})-i(Y|B\cup\{X_i\})+i(Y|B\cup\{X_i,X_m\})\\
+& = & i(Y|B)-i(Y|B\cup\{X_i\})-i(Y|B\cup\{X_m\})+i(Y|B\cup\{X_i,X_m\})\\
+& = & G(Y;X_i|B)-G(Y;X_i|B\cup\{X_m\})\\
+& = & 0,
+\end{eqnarray*}
+where the last step is a consequence of the irrelevance of $X_i$.
+
+
+%% \sum_b P(B=b) \left(
+%% i(Y|B=b)-\sum_{x_m} P(X_m=x_m|B=b) i(Y|B=b,X_m=x_m)\right)\nonumber\\
+%% &-& \sum_{b,x_i} P(B=b,X_i=x_i)\nonumber\\
+%% && \left( i(Y|B=b,X_i=x_i)-\sum_{x_m}
+%% P(X_m=x_m|B=b,X_i=x_i) i(Y|B=b,X_i=x_i,X_m=x_m)\right)\nonumber\\
+%% & = & \sum_b P(B=b)\left(
+%% i(Y|B=b)-\sum_{x_i} P(X_i=x_i|B=b) i(Y|B=b,X_i=x_i)\right)\nonumber\\
+%% &-& \sum_{b,x_m} P(B=b,X_m=x_m)\nonumber\\
+%% && \left( i(Y|B=b,X_m=x_m)-\sum_{x_i}
+%% P(X_i=x_i|B=b) i(Y|B=b,X_i=x_i,X_m=x_m)\right)\nonumber\\
+%% &=& G(Y;X_i|B)-G(Y;X_i|B\cup\{X_m\})\label{eqn:chain}
+%%\end{eqnarray}
+%}
+
+%% By definition of an irrelevant variable, we have:
+%% $$G(Y;X_i|B)=G(Y;X_i|B\cup\{X_m\})=0,$$
+%% which, plugged in Equation~\ref{eqn:chain}, gives:
+%% $$G(Y;X_m|B\cup\{X_i\})=G(Y;X_m|B).$$
+
+Using this property, the proofs of Lemma~\ref{lemma:adding-irrelevant}
+and Theorem~\ref{thm:relevant} in
+Appendices~\ref{app:lemma:adding-irrelevant} and
+\ref{app:thm:relevant} can be straightforwardly adapted, showing that,
+in the general case also, the MDI importance of a variable is
+invariant with respect to the removal or the addition of irrelevant
+variables.
+
+Given the general definition of irrelevance, all irrelevant variables
+also get zero MDI importance but, without further constraints on the
+impurity measure $i$, there is no guarantee that all relevant
+variables (defined as all variables that are not irrelevant) will get
+a non zero importance. This property, and in consequence
+theorem~\ref{thm:irrelevant}, will be however satisfied as soon as the
+impurity measure is such that $G(Y;X_m|B)\geq 0$ for all $X_m\in V$
+and for all $B\subseteq V$.
+
+\subsection{Common impurity measures}
+
+Developments in the previous section show that all results in the
+paper remain valid for any impurity measure leading to non negative
+impurity decreases, provided that the definition of variable
+irrelevance is adapted to this impurity measure. The choice of a
+specific impurity measure should thus be guided by the meaning one
+wants to associate to irrelevance.
+
+Measuring impurity with Shannon entropy, i.e., taking $i(Y|t)=H(Y|t)$
+and $i(Y|B=b)=H(Y|B=b)$, one gets back all results in the paper. Given the
+properties of conditional mutual information, irrelevance for this
+impurity measure strictly coincides with conditional independence: a
+variable $X_i$ is irrelevant to $Y$ with respect to $V$ if and only if
+$X_i\perp Y|B$ for all $B\subseteq V$.
+
+A common alternative to Shannon entropy for growing classification
+trees is Gini index (or entropy), which, in the finite and infinite
+sample cases, is written:
+\begin{eqnarray*}
+i(Y|t)&=& -\sum_j p(j|t) (1-p(j|t))\\
+i(Y|B=b)&=& -\sum_j P(Y=j|B=b) (1-P(Y=j|B=b)).
+\end{eqnarray*}
+Like Shannon entropy, this measure leads to non negative impurity
+decreases and the corresponding notion of irrelevance is also directly
+related to conditional independence.
+
+The most common impurity measure for regression is variance, which, in
+the finite and infinite sample cases, is written:
+\begin{eqnarray*}
+i(Y|t)&=&\frac{1}{N_t} \sum_{i\in t} (y_i-\frac{1}{N_t}
+\sum_{i\in t} y_i)^2\\
+i(Y|B=b)&=&E_{Y|B=b}\{(Y-E_{Y|B=b}\{Y\})^2\}.
+\end{eqnarray*}
+Variance can only decrease as a consequence of a split and therefore,
+Theorem~\ref{thm:irrelevant} is also valid for this impurity measure,
+meaning that only irrelevant variables will get a zero variance
+reduction. Note however that with this impurity measure, irrelevance
+is not directly related to conditional independence, as some variable
+$X_i$ can be irrelevant in the sense of our definition and still
+affects the distribution of output values.
+
+%\clearpage
+\bibliographystyle{apalike}
+\bibliography{bib}
+\vfill
+
+\end{document}

@@ -1,0 +1,35 @@
+# Vim temporaries
+.*.sw[op]
+
+# LaTeX output
+*.dvi
+nips.pdf
+nips-suppl.pdf
+nips-pics.pdf
+*.ps
+old/*
+
+# LaTeX cruft
+*.aux
+*.glo
+*.idx
+*.log
+*.toc
+*.ist
+*.acn
+*.acr
+*.alg
+*.bbl
+*.blg
+*.dvi
+*.glg
+*.gls
+*.ilg
+*.ind
+*.lof
+*.lot
+*.maf
+*.mtc
+*.mtc1
+*.out
+*.synctex.gz

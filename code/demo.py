@@ -6,10 +6,10 @@ http://orbi.ulg.ac.be/handle/2268/155642
 
 This demo reproduces Table 2 from the paper. It also shows that using Extra-
 Trees from Scikit-Learn, or an ensemble of randomized ID3 trees (see ID3.py)
-give similar results.
+give identical results.
 
-Figure 2 from the paper can be obtained using the 2d array importances
-values yielded by a `RandomizedID3Ensemble` (see code at the bottom).
+Figure 2 from the paper can be obtained using the 2d array importances values
+yielded by a `RandomizedID3Ensemble` (see the commented code at the bottom).
 
 Author: Gilles Louppe <g.louppe@gmail.com>
 License: BSD 3 clause

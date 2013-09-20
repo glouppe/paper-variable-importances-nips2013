@@ -17,6 +17,8 @@ We illustrate these properties on a simple example and discuss how they may
 change in the case of  non-totally randomized trees such as Random Forests and
 Extra-Trees.
 
+PDF: http://orbi.ulg.ac.be/handle/2268/155642
+
 ---
 
 _Structure of the repository:_

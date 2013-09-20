@@ -1,6 +1,11 @@
 Understanding variable importances in forests of randomized trees
 =================================================================
 
+* Gilles Louppe <g.louppe@ulg.ac.be>
+* Louis Wehenkel <l.wehenkel@ulg.ac.be>
+* Antonio Sutera <antonio.sutera@ulg.ac.be>
+* Pierre Geurts <p.geurts@ulg.ac.be>
+
 Despite growing interest and practical use in various scientific areas, variable
 importances derived from tree-based ensemble methods are not well understood
 from a theoretical point of view. In this work we characterize the Mean Decrease
@@ -17,7 +22,7 @@ We illustrate these properties on a simple example and discuss how they may
 change in the case of  non-totally randomized trees such as Random Forests and
 Extra-Trees.
 
-PDF: http://orbi.ulg.ac.be/handle/2268/155642
+Paper available at http://orbi.ulg.ac.be/handle/2268/155642
 
 ---
 

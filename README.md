@@ -16,3 +16,17 @@ invariant with respect to the removal or the addition of irrelevant variables.
 We illustrate these properties on a simple example and discuss how they may
 change in the case of  non-totally randomized trees such as Random Forests and
 Extra-Trees.
+
+---
+
+_Structure of the repository:_
+- `code/`: Demo and source code.
+- `tex/`: Latex files of the paper and supplementary materials.
+
+_License:_ BSD 3 clause
+
+_Contact:_ Gilles Louppe (@glouppe, <g.louppe@gmail.com>)
+
+
+
+

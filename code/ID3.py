@@ -9,7 +9,7 @@ This module implements a simplistic randomized ID3 tree classifier
 (`RandomizedID3Ensemble`).
 
 Warning: These classes implement `fit` and  `feature_importances_`, but do not
-         provide any `predict` method. This only serves as a proof-of-concept.
+         provide any `predict` method. They only serve as a proof-of-concept.
 
 Author: Gilles Louppe <g.louppe@gmail.com>
 License: BSD 3 clause

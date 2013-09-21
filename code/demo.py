@@ -118,7 +118,7 @@ def binomial(k, n):
 
 
 def entropy(X):
-    """Return the entropy (in base 2) of a discrete variable X, encoded as
+    """Return the entropy (in base 2) of a discrete variable X, encoded as a
        1d array."""
     e = 0.
     n_samples = len(X)
@@ -135,7 +135,7 @@ def mdi_importance(X_m, X, y):
     """The MDI importance of X_m for Y, as computed with an infinite ensemble
        of fully developed totally randomized trees.
 
-    This is a direction implementation of Equation 3 from the paper.
+    This is a direct implementation of Equation 3 from the paper.
 
     Parameters
     ----------

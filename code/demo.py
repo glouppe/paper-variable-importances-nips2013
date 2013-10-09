@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
     print "\tEqn.3",
     for m in range(p):
-        print "\tK=%d" % m,
+        print "\tK=%d" % (m + 1),
     print
 
     for m in range(p):

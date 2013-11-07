@@ -3,7 +3,7 @@ Understanding variable importances in forests of randomized trees
 
 * Gilles Louppe <g.louppe@ulg.ac.be>
 * Louis Wehenkel <l.wehenkel@ulg.ac.be>
-* Antonio Sutera <antonio.sutera@ulg.ac.be>
+* Antonio Sutera <a.sutera@ulg.ac.be>
 * Pierre Geurts <p.geurts@ulg.ac.be>
 
 Despite growing interest and practical use in various scientific areas, variable

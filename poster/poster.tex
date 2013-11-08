@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{amsmath}
 
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
@@ -20,6 +21,11 @@
 
 \footer{\tiny \textbf{Contact}: \url{g.louppe@ulg.ac.be} $\cdot$ \href{https://twitter.com/glouppe}{@glouppe} \textbf{Code}: \url{https://github.com/glouppe/paper-variable-importances}}
 \date{}
+
+\definecolor{lightgreen}{rgb}{0.094,0.737,0.611}
+\definecolor{lightblue}{rgb}{0.137,0.513,0.768}
+\definecolor{lightred}{rgb}{0.874,0.180,0.105}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
 
 \begin{document}
 \begin{frame}{}
@@ -39,9 +45,9 @@ from a theoretical point of view}. In this work we characterize the Mean Decreas
 Impurity (MDI) variable importances as measured by an ensemble of totally
 randomized trees in asymptotic sample and ensemble size conditions. \textbf{We derive a
 three-level decomposition of the  information jointly provided by all input
-variables about the output in terms of i) the MDI importance of each input
-variable, ii) the degree of interaction of a given input variable with the other
-input variables, iii) the different interaction terms of a given degree}. We then
+variables about the output in terms of {\color{lightgreen}i) the MDI importance of each input
+variable}, {\color{lightblue}ii) the degree of interaction of a given input variable with the other
+input variables}, {\color{lightred}iii) the different interaction terms of a given degree}}. We then
 show that this MDI importance of a variable is equal to zero if and only if the
 variable is irrelevant and that the MDI importance of a relevant variable is
 invariant with respect to the removal or the addition of irrelevant variables.
@@ -58,7 +64,7 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
 \begin{itemize}
 \item[-] The number of training samples in $t$ as $N_t$;
 \item[-] The proportion of training samples in $t$ as $p(t) = \frac{N_t}{N}$;
-\item[-] The impurity of node $t$ as $i(t) = H(Y|t)$ ($H$ is the Shannon entropy);
+\item[-] The impurity of node $t$ as $i(t) = H(Y|t)$ (i.e., the Shannon entropy);
 \item[-] The impurity decrease at node $t$ as $\Delta i(t) = i(t) - \frac{N_{t_L}}{N_t} i(t_L) - \frac{N_{t_R}}{N_t} i(t_R)$.
 \end{itemize}
 
@@ -68,9 +74,6 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
     \begin{pspicture}(14,11)
     % Grid
     %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
-    % Colors
-    \definecolor{lightblue}{rgb}{0,0.5,1.0}
-    \definecolor{gray}{rgb}{0.5,0.5,0.5}
     % Calcul
     \rput[l](9,9.5){\color{gray}{$i(t) = 0.97$}}
     \rput[l](9,8.5){\color{gray}{$i(t_L) = 0.65$}}
@@ -173,6 +176,56 @@ Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t)
 \begin{textblock}{0.32}(0.34,0.14)
 
 \begin{block}{Theoretical results \phantom{p}}
+
+\textbf{Theorem 1.}
+\textit{The MDI importance of $X_m \in V$ for $Y$ as computed
+with an   infinite ensemble of fully developed totally randomized trees and an
+infinitely large training sample is:
+  \begin{equation*}
+  Imp(X_m)=\underbrace{\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k}}_{{\color{lightblue} \substack{\text{ii) Decomposition along}\\
+                                                                                                     \text{the degrees $k$ of interaction}\\
+                                                                                                     \text{with the other variables}}}}
+           \underbrace{\sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)}_{{\color{lightred} \substack{\text{iii) Decomposition along all}\\
+                                                                                                \text{interaction terms $B$}\\
+                                                                                                \text{of a given degree $k$}}}},
+  \end{equation*}
+\noindent where $V^{-m}$ denotes the subset $V \setminus \{X_m\}$, ${\cal
+P}_k(V^{-m})$ is the set of subsets of  $V^{-m}$ of cardinality $k$, and
+$I(X_m;Y|B)$ is the conditional mutual information of $X_{m}$ and $Y$ given the
+variables in $B$.}
+
+\vspace{0.5cm}
+
+\textbf{Theorem 2.}
+\textit{For any ensemble of fully developed trees in asymptotic learning sample size
+conditions, we have that}
+\begin{equation*}
+\underbrace{\sum_{m=1}^{p}Imp(X_m)}_{{\color{lightgreen} \substack{\text{i) Decomposition in terms of}\\
+                                                                   \text{the MDI importance of}\\
+                                                                   \text{each input variable}}}} =
+\underbrace{I(X_{1}, \ldots, X_{p} ; Y)}_{\substack{\text{Information jointly provided}\\
+                                                    \text{by all input variables}\\
+                                                    \text{about the output}}}.
+\end{equation*}
+
+\vspace{0.5cm}
+
+\textbf{Theorem 3.}
+\textit{$X_i \in V$ is irrelevant to $Y$ with respect to $V$ if and only if  its
+infinite sample size importance as computed with an infinite ensemble of fully
+developed totally randomized trees built on $V$ for $Y$ is 0.}
+
+\vspace{0.5cm}
+
+\textbf{Theorem 5.}
+\textit{Let $V_R \subseteq V$ be the subset of all variables in $V$ that are relevant to $Y$ with
+respect to $V$. The infinite sample size importance of any variable $X_m \in
+V_R$ as computed with an infinite ensemble of fully developed totally randomized
+trees built on $V_R$ for $Y$ is the same as its importance computed in the same conditions by using all variables in $V$.}
+
+\end{block}
+
+\begin{block}{Non-totally randomized trees \phantom{p}}
 
 \end{block}
 

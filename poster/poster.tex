@@ -12,6 +12,10 @@
 \usepackage{color}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
@@ -177,6 +181,15 @@ Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t)
 
 \begin{block}{Theoretical results \phantom{p}}
 
+\textbf{Definition.} A fully developped  totally randomized tree is a decision tree in which each node $t$ is
+partitioned using a variable $X_i$ picked uniformly at random (among those not
+yet used at the parent nodes) into $|{\cal
+X}_i|$ sub-trees (i.e., one for each possible value of ${\cal X}_i$) and where
+the recursive construction halts when all $p$ variables have been
+used along the current branch.
+
+\vspace{0.3cm}
+
 \textbf{Theorem 1.}
 \textit{The MDI importance of $X_m \in V$ for $Y$ as computed
 with an   infinite ensemble of fully developed totally randomized trees and an
@@ -194,7 +207,7 @@ P}_k(V^{-m})$ is the set of subsets of  $V^{-m}$ of cardinality $k$, and
 $I(X_m;Y|B)$ is the conditional mutual information of $X_{m}$ and $Y$ given the
 variables in $B$.}
 
-\vspace{0.5cm}
+\vspace{0.3cm}
 
 \textbf{Theorem 2.}
 \textit{For any ensemble of fully developed trees in asymptotic learning sample size
@@ -208,14 +221,17 @@ conditions, we have that}
                                                     \text{about the output}}}.
 \end{equation*}
 
-\vspace{0.5cm}
+{\color{green} \cmark} Variable importances provide a three-level decomposition
+of the information jointly provided by all the input variables about the output.
+
+\vspace{0.3cm}
 
 \textbf{Theorem 3.}
 \textit{$X_i \in V$ is irrelevant to $Y$ with respect to $V$ if and only if  its
 infinite sample size importance as computed with an infinite ensemble of fully
 developed totally randomized trees built on $V$ for $Y$ is 0.}
 
-\vspace{0.5cm}
+\vspace{0.3cm}
 
 \textbf{Theorem 5.}
 \textit{Let $V_R \subseteq V$ be the subset of all variables in $V$ that are relevant to $Y$ with
@@ -223,9 +239,17 @@ respect to $V$. The infinite sample size importance of any variable $X_m \in
 V_R$ as computed with an infinite ensemble of fully developed totally randomized
 trees built on $V_R$ for $Y$ is the same as its importance computed in the same conditions by using all variables in $V$.}
 
+\vspace{0.3cm}
+
+{\color{green} \cmark} Variable importances depend only on the relevant
+variables.
+
 \end{block}
 
 \begin{block}{Non-totally randomized trees \phantom{p}}
+
+{\color{red} \xmark} Because of masking effects due to the non-totally
+random choices of split variables, Theorems 1, 3 and 5 do not apply for Random forests and variants.
 
 \end{block}
 

@@ -1,4 +1,4 @@
-poster.pdf: poster.tex
+poster.pdf: poster.tex beamerthemeRJH.sty
 	pdflatex -shell-escape poster
 
 clean:

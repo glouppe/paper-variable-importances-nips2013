@@ -15,34 +15,33 @@
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
 
-\title{Understanding variables importances\\
-in forests of randomized trees}
+\title{Understanding variables importances in forests of randomized trees}
 \author{Gilles Louppe, Louis Wehenkel, Antonio Sutera and Pierre Geurts}
 
-\footer{}
+\footer{\tiny \textbf{Contact}: \url{g.louppe@ulg.ac.be} $\cdot$ \href{https://twitter.com/glouppe}{@glouppe} \textbf{Code}: \url{https://github.com/glouppe/paper-variable-importances}}
 \date{}
 
 \begin{document}
 \begin{frame}{}
 
-\begin{textblock}{0.32}(0.01,0.14)
-
 
 %% Column 1 ==================================================================
+
+\begin{textblock}{0.32}(0.01,0.14)
 
 %% Abstract ------------------------------------------------------------------
 
 \begin{block}{Abstract \phantom{p}}
 
-Despite growing interest and practical use in various scientific areas, variable
+Despite growing interest and practical use in various scientific areas, \textbf{variable
 importances derived from tree-based ensemble methods are not well understood
-from a theoretical point of view. In this work we characterize the Mean Decrease
+from a theoretical point of view}. In this work we characterize the Mean Decrease
 Impurity (MDI) variable importances as measured by an ensemble of totally
-randomized trees in asymptotic sample and ensemble size conditions. We derive a
+randomized trees in asymptotic sample and ensemble size conditions. \textbf{We derive a
 three-level decomposition of the  information jointly provided by all input
 variables about the output in terms of i) the MDI importance of each input
 variable, ii) the degree of interaction of a given input variable with the other
-input variables, iii) the different interaction terms of a given degree. We then
+input variables, iii) the different interaction terms of a given degree}. We then
 show that this MDI importance of a variable is equal to zero if and only if the
 variable is irrelevant and that the MDI importance of a relevant variable is
 invariant with respect to the removal or the addition of irrelevant variables.
@@ -52,6 +51,119 @@ Extra-Trees.
 
 \end{block}
 
+\begin{block}{Variable importances in trees \phantom{p}}
+
+\textbf{Notations.} Let assume a set $V = \{X_1, ..., X_p\}$ of categorical input variables and a categorical output variable $Y$. Given a training sample ${\cal L}$ of $N$ joint observations of $X_1, ..., X_p, Y$ drawn from $P(X_1, ..., X_p, Y)$,
+let us define for any internal node $t$ of a decision tree built from ${\cal L}$:
+\begin{itemize}
+\item[-] The number of training samples in $t$ as $N_t$;
+\item[-] The proportion of training samples in $t$ as $p(t) = \frac{N_t}{N}$;
+\item[-] The impurity of node $t$ as $i(t) = H(Y|t)$ ($H$ is the Shannon entropy);
+\item[-] The impurity decrease at node $t$ as $\Delta i(t) = i(t) - \frac{N_{t_L}}{N_t} i(t_L) - \frac{N_{t_R}}{N_t} i(t_R)$.
+\end{itemize}
+
+\begin{center}
+
+\scalebox{1.2}{
+    \begin{pspicture}(14,11)
+    % Grid
+    %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
+    % Colors
+    \definecolor{lightblue}{rgb}{0,0.5,1.0}
+    \definecolor{gray}{rgb}{0.5,0.5,0.5}
+    % Calcul
+    \rput[l](9,9.5){\color{gray}{$i(t) = 0.97$}}
+    \rput[l](9,8.5){\color{gray}{$i(t_L) = 0.65$}}
+    \rput[l](9,7.5){\color{gray}{$i(t_R) = 0.81$}}
+    \rput[l](9,6.5){\color{gray}{$\Delta i(t) = i(t) - \frac{12}{20} i(t_L) - \frac{8}{20} i(t_R)$}}
+    \rput[l](10.55,5.5){\color{gray}{$= 0.25$}}
+    % Parent node
+        % Arrows
+        \psline[linewidth=2pt,linecolor=gray]{->}(4.5,10.5)(5,10)
+        \psline[linewidth=2pt,linecolor=gray]{->}(5,9)(3,7)
+        \psline[linewidth=2pt,linecolor=gray]{->}(5,9)(7,7)
+        % Node
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](5,9){1}
+        % Samples
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.3,9.35)(4.5,9.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.6,9.35)(4.8,9.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.9,9.35)(5.1,9.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](5.2,9.35)(5.4,9.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](5.5,9.35)(5.7,9.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.3,9.05)(4.5,9.25)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.6,9.05)(4.8,9.25)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.9,9.05)(5.1,9.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](5.2,9.05)(5.4,9.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](5.5,9.05)(5.7,9.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.3,8.75)(4.5,8.95)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.6,8.75)(4.8,8.95)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.9,8.75)(5.1,8.95)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](5.2,8.75)(5.4,8.95)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](5.5,8.75)(5.7,8.95)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.3,8.45)(4.5,8.65)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.6,8.45)(4.8,8.65)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.9,8.45)(5.1,8.65)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](5.2,8.45)(5.4,8.65)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](5.5,8.45)(5.7,8.65)
+        % Text
+        \rput(6,10){$t$}
+    % Left node
+        % Arrows
+        \psline[linewidth=2pt,linecolor=gray](3,6)(2,5)
+        \psline[linewidth=2pt,linecolor=gray](3,6)(4,5)
+        % Node
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](3,6){1}
+        % Samples
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.3,6.35)(2.5,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.6,6.35)(2.8,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.9,6.35)(3.1,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](3.2,6.35)(3.4,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](3.5,6.35)(3.7,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.3,6.05)(2.5,6.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.6,6.05)(2.8,6.25)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](2.9,6.05)(3.1,6.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](3.2,6.05)(3.4,6.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](3.5,6.05)(3.7,6.25)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.3,5.75)(2.5,5.95)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](2.6,5.75)(2.8,5.95)
+        % Text
+        \rput(4,7){$t_L$}
+        \rput(2.5,8){$X_m = 0$}
+    % Right node
+        % Arrows
+        \psline[linewidth=2pt,linecolor=gray](7,6)(6,5)
+        \psline[linewidth=2pt,linecolor=gray](7,6)(8,5)
+        % Node
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](7,6){1}
+        % Samples
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.3,6.35)(6.5,6.55)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.6,6.35)(6.8,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](6.9,6.35)(7.1,6.55)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](7.2,6.35)(7.4,6.55)
+        \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](7.5,6.35)(7.7,6.55)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.3,6.05)(6.5,6.25)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.6,6.05)(6.8,6.25)
+        \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.9,6.05)(7.1,6.25)
+        % Text
+        \rput(8,7){$t_R$}
+        \rput(7.5,8){$X_m = 1$}
+    \end{pspicture}
+}
+
+\end{center}
+
+\textbf{Definition.} In an ensemble of decision trees, the \textit{Mean
+Decrease Impurity} (MDI) importance of an input variable $X_m$ is the
+sum of the weighted impurity decreases $p(t)\Delta i(t)$, for all nodes $t$
+where $X_m$ is used, averaged over all $N_T$ trees in the ensemble:
+\begin{equation*}\label{eq:mdi}
+Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t)
+\end{equation*}
+
+\end{block}
+
+
+
 \end{textblock}
 
 
@@ -60,7 +172,7 @@ Extra-Trees.
 
 \begin{textblock}{0.32}(0.34,0.14)
 
-\begin{block}{Foo bar \phantom{p}}
+\begin{block}{Theoretical results \phantom{p}}
 
 \end{block}
 
@@ -71,7 +183,11 @@ Extra-Trees.
 
 \begin{textblock}{0.32}(0.67,0.14)
 
-\begin{block}{Foo bar \phantom{p}}
+\begin{block}{Illustration \phantom{p}}
+
+\end{block}
+
+\begin{block}{Conclusions \phantom{p}}
 
 \end{block}
 

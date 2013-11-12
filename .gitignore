@@ -33,3 +33,5 @@ old/*
 *.mtc1
 *.out
 *.synctex.gz
+*.snm
+*.nav

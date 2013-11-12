@@ -17,6 +17,7 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \usepackage[labelformat=empty]{caption}
+\usepackage{framed}
 
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
@@ -26,6 +27,8 @@
 \definecolor{lightblue}{rgb}{0.137,0.513,0.768}
 \definecolor{lightred}{rgb}{0.874,0.180,0.105}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{lightgray}{rgb}{0.8,0.8,0.8}
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
 
 \title{Understanding variables importances in forests of randomized trees {\it [Sun88]}}
 \author{Gilles Louppe, Louis Wehenkel, Antonio Sutera and Pierre Geurts\\[1.5ex]
@@ -44,7 +47,7 @@
 
 %% Column 1 ==================================================================
 
-\begin{textblock}{0.32}(0.01,0.12)
+\begin{textblock}{0.32}(0.01,0.14)
 
 %% Abstract ------------------------------------------------------------------
 
@@ -56,9 +59,13 @@ from a theoretical point of view}. In this work we characterize the Mean Decreas
 Impurity (MDI) variable importances as measured by an ensemble of totally
 randomized trees in asymptotic sample and ensemble size conditions. \textbf{We derive a
 three-level decomposition of the  information jointly provided by all input
-variables about the output in terms of {\color{lightgreen}i) the MDI importance of each input
-variable}, {\color{lightblue}ii) the degree of interaction of a given input variable with the other
-input variables}, {\color{lightred}iii) the different interaction terms of a given degree}}. We then
+variables about the output in terms of
+\begin{itemize}
+\item[] {\color{lightgreen}i) the MDI importance of each input variable,}
+\item[] {\color{lightblue}ii) the degree of interaction of an input variable with the other input variables,}
+\item[] {\color{lightred}iii) the different interaction terms of a given degree.}
+\end{itemize}}
+We then
 show that this MDI importance of a variable is equal to zero if and only if the
 variable is irrelevant and that the MDI importance of a relevant variable is
 invariant with respect to the removal or the addition of irrelevant variables.
@@ -94,11 +101,11 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
     \rput[l](10.55,5.5){\color{gray}{$= 0.25$}}
     % Parent node
         % Arrows
-        \psline[linewidth=2pt,linecolor=gray]{->}(4.5,10.5)(5,10)
-        \psline[linewidth=2pt,linecolor=gray]{->}(5,9)(3,7)
-        \psline[linewidth=2pt,linecolor=gray]{->}(5,9)(7,7)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(4.5,10.5)(5,10)
+        \psline[linewidth=2pt,linecolor=blue]{->}(5,9)(3,7)
+        \psline[linewidth=2pt,linecolor=blue]{->}(5,9)(7,7)
         % Node
-        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](5,9){1}
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](5,9){1}
         % Samples
         \psframe[fillstyle=solid,fillcolor=red,linecolor=red](4.3,9.35)(4.5,9.55)
         \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](4.6,9.35)(4.8,9.55)
@@ -124,10 +131,10 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
         \rput(6,10){$t$}
     % Left node
         % Arrows
-        \psline[linewidth=2pt,linecolor=gray](3,6)(2,5)
-        \psline[linewidth=2pt,linecolor=gray](3,6)(4,5)
+        %\psline[linewidth=2pt,linecolor=gray](3,6)(2,5)
+        %\psline[linewidth=2pt,linecolor=gray](3,6)(4,5)
         % Node
-        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](3,6){1}
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](3,6){1}
         % Samples
         \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.3,6.35)(2.5,6.55)
         \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.6,6.35)(2.8,6.55)
@@ -146,10 +153,10 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
         \rput(2.5,8){$X_m = 0$}
     % Right node
         % Arrows
-        \psline[linewidth=2pt,linecolor=gray](7,6)(6,5)
-        \psline[linewidth=2pt,linecolor=gray](7,6)(8,5)
+        %\psline[linewidth=2pt,linecolor=gray](7,6)(6,5)
+        %\psline[linewidth=2pt,linecolor=gray](7,6)(8,5)
         % Node
-        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt](7,6){1}
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](7,6){1}
         % Samples
         \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.3,6.35)(6.5,6.55)
         \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.6,6.35)(6.8,6.55)
@@ -164,30 +171,17 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
         \rput(7.5,8){$X_m = 1$}
     \end{pspicture}
 }
-
 \end{center}
 
 \textbf{Definition.} In an ensemble of decision trees, the \textit{Mean
 Decrease Impurity} (MDI) importance of an input variable $X_m$ is the
 sum of the weighted impurity decreases $p(t)\Delta i(t)$, for all nodes $t$
 where $X_m$ is used, averaged over all $N_T$ trees in the ensemble:
-\begin{equation*}\label{eq:mdi}
-Imp(X_m) = \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t)
-\end{equation*}
+\begin{align*}\label{eq:mdi}
+Imp(X_m) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t) &&\text{(1)}
+\end{align*}
 
-\end{block}
-
-
-
-\end{textblock}
-
-
-
-%% Column 2 ==================================================================
-
-\begin{textblock}{0.32}(0.34,0.12)
-
-\begin{block}{Theoretical results \phantom{p}}
+\vspace{0.3cm}
 
 \textbf{Definition.} A fully developped  totally randomized tree is a decision tree in which each node $t$ is
 partitioned using a variable $X_i$ picked uniformly at random (among those not
@@ -196,47 +190,107 @@ X}_i|$ sub-trees (i.e., one for each possible value of ${\cal X}_i$) and where
 the recursive construction halts when all $p$ variables have been
 used along the current branch.
 
-\vspace{0.3cm}
+\end{block}
+
+\end{textblock}
+
+
+
+%% Column 2 ==================================================================
+
+\begin{textblock}{0.32}(0.34,0.14)
+
+\begin{block}{Theoretical results \phantom{p}}
 
 {\color{green} \cmark} \textbf{Variable importances provide a three-level decomposition
-of the information jointly provided by all the input variables about the output.}
+of the information jointly provided by all the input variables about the output.}\\
+{\color{green} \cmark} \textbf{Variable importances depend only on the relevant
+variables.}
 
-\vspace{0.3cm}
-
+\begin{shaded}
 \textbf{Theorem 1.}
 \textit{The MDI importance of $X_m \in V$ for $Y$ as computed
 with an   infinite ensemble of fully developed totally randomized trees and an
-infinitely large training sample is:
-  \begin{equation*}
-  Imp(X_m)=\underbrace{\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k}}_{{\color{lightblue} \substack{\text{ii) Decomposition along}\\
+infinitely large training sample is:}
+  \begin{align*}
+  Imp(X_m)&=\underbrace{\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k}}_{{\color{lightblue} \substack{\text{ii) Decomposition along}\\
                                                                                                      \text{the degrees $k$ of interaction}\\
                                                                                                      \text{with the other variables}}}}
            \underbrace{\sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)}_{{\color{lightred} \substack{\text{iii) Decomposition along all}\\
                                                                                                 \text{interaction terms $B$}\\
-                                                                                                \text{of a given degree $k$}}}},
-  \end{equation*}
-\noindent where $V^{-m}$ denotes the subset $V \setminus \{X_m\}$, ${\cal
+                                                                                                \text{of a given degree $k$}}}}, &&\text{(2)}
+  \end{align*}
+\textit{\noindent where $V^{-m}$ denotes the subset $V \setminus \{X_m\}$, ${\cal
 P}_k(V^{-m})$ is the set of subsets of  $V^{-m}$ of cardinality $k$, and
 $I(X_m;Y|B)$ is the conditional mutual information of $X_{m}$ and $Y$ given the
 variables in $B$.}
+\end{shaded}
+
+Proof. (\textit{sketch})
+
+\begin{center}
+\scalebox{1.0}{
+    \begin{pspicture}(15,10)
+    % Grid
+    %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(5,9.5)(3,8.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(5,9.5)(7,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](5,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(2,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(4,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](3,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(7,8)(6,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(7,8)(8,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](7,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(1.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(2.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](2,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(3.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(4.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](4,6){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(6,6)(5.5,4.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(6,6)(6.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](6,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(7.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(8.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](8,6){0.5}
+    % Labels
+    \rput(7,9.25){$X_{i_1}=1$}
+    \rput(5.25,7.25){$X_{i_2}=0$}
+    \rput(6.5,6.5){$t$}
+    \rput(4.5,5.25){$X_{m}=0$}
+    \rput(7.5,5.25){$X_{m}=1$}
+    % Side text
+    \rput[l](11,9){$\frac{1}{C_p^k}$ is the probability of}
+    \rput[l](11,8.25){the branch $B=\{X_{i_1}, X_{i_2}\}$}
+    \rput[l](11,7){$\frac{1}{p-k}$ is the probability of}
+    \rput[l](11,6.25){drawing $X_m$ given $B$}
+    \end{pspicture}
+}
+\end{center}
+
+(i) Using the Shannon entropy, $\Delta i(t) = I(X_m; Y|t)$ ;\\
+(ii) As $N \to \infty$, $p(t)  \to p(B=b)$, where $B$ is the subset of $k$ variables in the branch leading to $t$ and $b$ the vector of values of these variables ;\\
+(iii) As $N_T \to \infty$, all branches $B=b$ of size $k$ appear with probability $\frac{1}{C_p^k}$ and $X_m$ is tested at the end of $\frac{1}{p-k}$ of them.
 
 \vspace{0.3cm}
 
+\begin{shaded}
 \textbf{Theorem 2.}
 \textit{For any ensemble of fully developed trees in asymptotic learning sample size
 conditions, we have that}
-\begin{equation*}
+\begin{align*}
 \underbrace{\sum_{m=1}^{p}Imp(X_m)}_{{\color{lightgreen} \substack{\text{i) Decomposition in terms of}\\
                                                                    \text{the MDI importance of}\\
-                                                                   \text{each input variable}}}} =
+                                                                   \text{each input variable}}}} &=
 \underbrace{I(X_{1}, \ldots, X_{p} ; Y)}_{\substack{\text{Information jointly provided}\\
                                                     \text{by all input variables}\\
-                                                    \text{about the output}}}.
-\end{equation*}
-
-
-{\color{green} \cmark} \textbf{Variable importances depend only on the relevant
-variables.}
+                                                    \text{about the output}}}&&\text{(3)}
+\end{align*}
 
 \vspace{0.3cm}
 
@@ -252,6 +306,7 @@ developed totally randomized trees built on $V$ for $Y$ is 0.}
 respect to $V$. The infinite sample size importance of any variable $X_m \in
 V_R$ as computed with an infinite ensemble of fully developed totally randomized
 trees built on $V_R$ for $Y$ is the same as its importance computed in the same conditions by using all variables in $V$.}
+\end{shaded}
 
 \end{block}
 
@@ -260,7 +315,7 @@ trees built on $V_R$ for $Y$ is the same as its importance computed in the same 
 
 %% Column 3 ==================================================================
 
-\begin{textblock}{0.32}(0.67,0.12)
+\begin{textblock}{0.32}(0.67,0.14)
 
 \begin{block}{Non-totally randomized trees \phantom{p}}
 

@@ -22,6 +22,7 @@
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
 
+\newcommand{\qedwhite}{\hfill \ensuremath{\Box}}
 
 \definecolor{lightgreen}{rgb}{0.094,0.737,0.611}
 \definecolor{lightblue}{rgb}{0.137,0.513,0.768}
@@ -183,7 +184,7 @@ Imp(X_m) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t) 
 
 \vspace{0.3cm}
 
-\textbf{Definition.} A fully developped  totally randomized tree is a decision tree in which each node $t$ is
+\textbf{Definition.} A \textit{fully developped  totally randomized tree is a decision tree} in which each node $t$ is
 partitioned using a variable $X_i$ picked uniformly at random (among those not
 yet used at the parent nodes) into $|{\cal
 X}_i|$ sub-trees (i.e., one for each possible value of ${\cal X}_i$) and where
@@ -202,9 +203,9 @@ used along the current branch.
 
 \begin{block}{Theoretical results \phantom{p}}
 
-{\color{green} \cmark} \textbf{Variable importances provide a three-level decomposition
+{\color{green} \cmark} Thm. 1 and 2: \textbf{Variable importances provide a three-level decomposition
 of the information jointly provided by all the input variables about the output.}\\
-{\color{green} \cmark} \textbf{Variable importances depend only on the relevant
+{\color{green} \cmark} Thm. 3 and 5: \textbf{Variable importances depend only on the relevant
 variables.}
 
 \begin{shaded}
@@ -274,8 +275,10 @@ Proof. (\textit{sketch})
 \end{center}
 
 (i) Using the Shannon entropy, $\Delta i(t) = I(X_m; Y|t)$ ;\\
-(ii) As $N \to \infty$, $p(t)  \to p(B=b)$, where $B$ is the subset of $k$ variables in the branch leading to $t$ and $b$ the vector of values of these variables ;\\
+(ii) As $N \to \infty$, $p(t)  \to p(B=b)$ and $I(X_m;Y|t) \to I(X_m;Y|B=b)$, where $B$ is the subset of $k$ variables in the branch leading to $t$ and $b$ the vector of values of these variables ;\\
 (iii) As $N_T \to \infty$, all branches $B=b$ of size $k$ appear with probability $\frac{1}{C_p^k}$ and $X_m$ is tested at the end of $\frac{1}{p-k}$ of them.
+
+$\Rightarrow$ Equation~(1) transforms into Equation~(2). \qedwhite
 
 \vspace{0.3cm}
 

@@ -204,7 +204,7 @@ used along the current branch.
 \begin{block}{Theoretical results \phantom{p}}
 
 {\color{green} \cmark} Thm. 1 and 2: \textbf{Variable importances provide a three-level decomposition
-of the information jointly provided by all the input variables about the output.}\\
+of the information jointly provided by all the input variables about the output}, accounting for all interaction terms in a fair and exhaustive way.\\
 {\color{green} \cmark} Thm. 3 and 5: \textbf{Variable importances depend only on the relevant
 variables.}
 
@@ -212,7 +212,7 @@ variables.}
 \textbf{Theorem 1.}
 \textit{The MDI importance of $X_m \in V$ for $Y$ as computed
 with an   infinite ensemble of fully developed totally randomized trees and an
-infinitely large training sample is:}
+infinitely large training set is:}
   \begin{align*}
   Imp(X_m)&=\underbrace{\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k}}_{{\color{lightblue} \substack{\text{ii) Decomposition along}\\
                                                                                                      \text{the degrees $k$ of interaction}\\
@@ -276,7 +276,7 @@ Proof. (\textit{sketch})
 
 (i) Using the Shannon entropy, $\Delta i(t) = I(X_m; Y|t)$ ;\\
 (ii) As $N \to \infty$, $p(t)  \to p(B=b)$ and $I(X_m;Y|t) \to I(X_m;Y|B=b)$, where $B$ is the subset of $k$ variables in the branch leading to $t$ and $b$ the vector of values of these variables ;\\
-(iii) As $N_T \to \infty$, all branches $B=b$ of size $k$ appear with probability $\frac{1}{C_p^k}$ and $X_m$ is tested at the end of $\frac{1}{p-k}$ of them.
+(iii) As $N_T \to \infty$, branches $B=b$ of size $k$ all appear with equal probability $\frac{1}{C_p^k}$ and $X_m$ is tested at the end of $\frac{1}{p-k}$ of them.
 
 $\Rightarrow$ Equation~(1) transforms into Equation~(2). \qedwhite
 
@@ -332,8 +332,8 @@ exhaustive exploration of all interaction terms.
 
 \begin{block}{Illustration \phantom{p}}
 
-\textbf{Task.} Let us consider a 7-segment indicator (Fig. (a)) displaying numerals
-using lights in on-off combinations. Let $Y$ be a random variable taking its value in ${0, 1, ..., 9}$
+\textbf{Task.} Let us consider a 7-segment indicator, as shown in Fig (a), displaying numerals
+using lights in on-off combinations. Let $Y$ be a random variable taking its value in $\{0, 1, ..., 9\}$
 and let $X_1, ..., X_7$ be binary variables corresponding to the light segments. We illustrate
 variable importances as computed with totally randomized trees built
 from training samples drawn from $P(X_1, ..., X_7, Y)$.
@@ -414,13 +414,18 @@ allow to perfectly predict the output
 \vspace{0.5cm}
 \begin{block}{Conclusions \phantom{p}}
 
-{\color{green} \cmark} First step towards understanding variable importances as computed with a forest of randomized trees.
+{\color{green} \cmark} First step towards understanding variable importances, as computed with a forest of totally randomized trees.
 
 {\color{green} \cmark} Variable importances offer a three-level decomposition of the information provided by the inputs about the output.
 
-{\color{green} \cmark} MDI importances exhibit desirable properties for assessing the relevance of a variable (it is null iff the variable is irrelevant, and depends only on the relevant variables).
+{\color{green} \cmark} MDI importances exhibit desirable properties for assessing the relevance of a variable:
+\begin{itemize}
+\item[-] it accounts for all interaction terms, in a fair and exhaustive way;
+\item[-] it is null if and only if the variable is irrelevant;
+\item[-] it depends only on the relevant variables;
+\end{itemize}
 
-{\color{blue} ?} Results should be extended to binary decision trees.
+{\color{blue} ?} Fully formalize variable importances of actual Random Forests and variants.
 
 {\color{blue} ?} Characterize the distribution of variable importances in a finite setting.
 

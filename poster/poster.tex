@@ -18,6 +18,7 @@
 \newcommand{\xmark}{\ding{55}}%
 \usepackage[labelformat=empty]{caption}
 \usepackage{framed}
+\usepackage{wrapfig}
 
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
@@ -39,7 +40,7 @@
 \includegraphics[scale=0.18]{images/github.png}~\url{https://github.com/glouppe/paper-variable-importances}
 }}
 
-\footer{} %\tiny \textbf{Contact}: \url{g.louppe@ulg.ac.be} $\cdot$ \href{https://twitter.com/glouppe}{@glouppe} \textbf{Code}: \url{https://github.com/glouppe/paper-variable-importances}}
+\footer{}
 \date{}
 
 \begin{document}
@@ -332,60 +333,49 @@ exhaustive exploration of all interaction terms.
 
 \begin{block}{Illustration \phantom{p}}
 
-\textbf{Task.} Let us consider a 7-segment indicator, as shown in Fig (a), displaying numerals
-using lights in on-off combinations. Let $Y$ be a random variable taking its value in $\{0, 1, ..., 9\}$
-and let $X_1, ..., X_7$ be binary variables corresponding to the light segments. We illustrate
-variable importances as computed with totally randomized trees built
-from training samples drawn from $P(X_1, ..., X_7, Y)$.
-
-\begin{minipage}[b]{\textwidth}
-  \begin{minipage}[t]{0.3\textwidth}
-    \centering
-    \begin{pspicture}(0,0)(2.0,4.0)
-        \usefont{T1}{ptm}{m}{n}
-        \psline[linewidth=0.02cm](0.0,0.0)(0.0,0.7)
-        \psline[linewidth=0.02cm](0.0,0.0)(0.7,0.0)
-        \psline[linewidth=0.02cm](2.0,0.0)(2.0,0.7)
-        \psline[linewidth=0.02cm](2.0,0.0)(1.3,0.0)
-        \psline[linewidth=0.02cm](0.0,2.0)(0.0,1.3)
-        \psline[linewidth=0.02cm](0.0,2.0)(0.7,2.0)
-        \psline[linewidth=0.02cm](2.0,2.0)(2.0,1.3)
-        \psline[linewidth=0.02cm](2.0,2.0)(1.3,2.0)
-        \psline[linewidth=0.02cm](0.0,2.0)(0.0,2.7)
-        \psline[linewidth=0.02cm](2.0,2.0)(2.0,2.7)
-        \psline[linewidth=0.02cm](0.0,4.0)(0.0,3.3)
-        \psline[linewidth=0.02cm](0.0,4.0)(0.7,4.0)
-        \psline[linewidth=0.02cm](2.0,4.0)(2.0,3.3)
-        \psline[linewidth=0.02cm](2.0,4.0)(1.3,4.0)
-        \rput(1.0,4.0){$X_1$}
-        \rput(0.0,3.0){$X_2$}
-        \rput(2.0,3.0){$X_3$}
-        \rput(1.0,2.0){$X_4$}
-        \rput(0.0,1.0){$X_5$}
-        \rput(2.0,1.0){$X_6$}
-        \rput(1.0,0.0){$X_7$}
-    \end{pspicture}
-    \captionof{figure}{\tiny (a)}
-    \label{fig:digits}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.65\textwidth}
-    \centering
-    \includegraphics[scale=0.65]{images/imp-led.pdf}
-    \captionof{table}{\tiny (b)}
-    \label{table:digits}
-  \end{minipage}
+\begin{minipage}{\linewidth}
+    \begin{wrapfigure}[7]{r}{0.15\textwidth}
+      \begin{center}
+        \vspace{-0.5cm}
+        \scalebox{0.6}{
+        \begin{pspicture}(0,0)(2.0,4.0)
+            \usefont{T1}{ptm}{m}{n}
+            \psline[linewidth=0.02cm](0.0,0.0)(0.0,0.7)
+            \psline[linewidth=0.02cm](0.0,0.0)(0.7,0.0)
+            \psline[linewidth=0.02cm](2.0,0.0)(2.0,0.7)
+            \psline[linewidth=0.02cm](2.0,0.0)(1.3,0.0)
+            \psline[linewidth=0.02cm](0.0,2.0)(0.0,1.3)
+            \psline[linewidth=0.02cm](0.0,2.0)(0.7,2.0)
+            \psline[linewidth=0.02cm](2.0,2.0)(2.0,1.3)
+            \psline[linewidth=0.02cm](2.0,2.0)(1.3,2.0)
+            \psline[linewidth=0.02cm](0.0,2.0)(0.0,2.7)
+            \psline[linewidth=0.02cm](2.0,2.0)(2.0,2.7)
+            \psline[linewidth=0.02cm](0.0,4.0)(0.0,3.3)
+            \psline[linewidth=0.02cm](0.0,4.0)(0.7,4.0)
+            \psline[linewidth=0.02cm](2.0,4.0)(2.0,3.3)
+            \psline[linewidth=0.02cm](2.0,4.0)(1.3,4.0)
+            \rput(1.0,4.0){$X_1$}
+            \rput(0.0,3.0){$X_2$}
+            \rput(2.0,3.0){$X_3$}
+            \rput(1.0,2.0){$X_4$}
+            \rput(0.0,1.0){$X_5$}
+            \rput(2.0,1.0){$X_6$}
+            \rput(1.0,0.0){$X_7$}
+        \end{pspicture}
+        }
+      \end{center}
+    \end{wrapfigure}
+    \textbf{Task.} Let us consider a 7-segment indicator displaying numerals
+    using lights in on-off combinations. Let $Y$ be a random variable taking its value in $\{0, 1, ..., 9\}$
+    and let $X_1, ..., X_7$ be binary variables corresponding to the light segments. We illustrate
+    variable importances as computed with totally randomized trees built
+    from training samples drawn from $P(X_1, ..., X_7, Y)$.
 \end{minipage}
 
-Fig (b) illustrates the decomposition of variable importances along the
-degrees $k$ of interactions of one variable with the other ones. At $K=1$, all
-$I(X_m;Y|B)$ are accounted for in the total importance, while at $K=7$ only
-some of them are taken into account due to masking effects.
-
-
+\begin{center}
 \begin{table}
     \scalebox{0.8}{
-    \begin{tabular}{ c | c c c c c c c c }
+    \begin{tabular}{| c | c c c c c c c c |}
     \hline
         & Thm.1 & $K=1$ & $K=2$ & $K=3$ & $K=4$ & $K=5$ & $K=6$ & $K=7$ \\
     \hline
@@ -401,12 +391,23 @@ some of them are taken into account due to masking effects.
     \hline
     \end{tabular}}
 \end{table}
+\end{center}
 
 Variable importances at $K=1$ follow their theoretical values,
 as predicted by Theorem~1. However, as $K$ increases,  importances diverge due
 to masking effects. In accordance with Theorem~2, their sum is also always
 equal to $I(X_{1}, \ldots, X_{7}; Y) = H(Y) = \log_{2}(10)= 3.321$ since inputs
 allow to perfectly predict the output
+
+
+\begin{center}
+    \includegraphics[scale=0.65]{images/imp-led.pdf}
+\end{center}
+
+Decomposition of variable importances along the
+degrees $k$ of interactions of one variable with the other ones. At $K=1$, all
+$I(X_m;Y|B)$ are accounted for in the total importance, while at $K=7$ only
+some of them are taken into account due to masking effects.
 
 
 \end{block}

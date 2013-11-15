@@ -136,7 +136,9 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
         %\psline[linewidth=2pt,linecolor=gray](3,6)(2,5)
         %\psline[linewidth=2pt,linecolor=gray](3,6)(4,5)
         % Node
-        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](3,6){1}
+        \psline[linewidth=2pt,linecolor=lightgray]{-}(3,6)(2,5)
+        \psline[linewidth=2pt,linecolor=lightgray]{-}(3,6)(4,5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](3,6){1}
         % Samples
         \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.3,6.35)(2.5,6.55)
         \psframe[fillstyle=solid,fillcolor=lightblue,linecolor=lightblue](2.6,6.35)(2.8,6.55)
@@ -158,7 +160,9 @@ let us define for any internal node $t$ of a decision tree built from ${\cal L}$
         %\psline[linewidth=2pt,linecolor=gray](7,6)(6,5)
         %\psline[linewidth=2pt,linecolor=gray](7,6)(8,5)
         % Node
-        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](7,6){1}
+        \psline[linewidth=2pt,linecolor=lightgray]{-}(7,6)(6,5)
+        \psline[linewidth=2pt,linecolor=lightgray]{-}(7,6)(8,5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](7,6){1}
         % Samples
         \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.3,6.35)(6.5,6.55)
         \psframe[fillstyle=solid,fillcolor=red,linecolor=red](6.6,6.35)(6.8,6.55)
@@ -231,8 +235,8 @@ variables in $B$.}
 Proof. (\textit{sketch})
 
 \begin{center}
-\scalebox{1.0}{
-    \begin{pspicture}(15,10)
+\scalebox{0.7}{
+    \begin{pspicture}(30,10)
     % Grid
     %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
     % Tree
@@ -260,17 +264,66 @@ Proof. (\textit{sketch})
         \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(7.5,4.5)
         \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(8.5,4.5)
         \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](8,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(13,9.5)(11,8.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(13,9.5)(15,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](13,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=blue]{->}(11,8)(10,6.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(11,8)(12,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](11,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(14,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(16,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](15,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(9.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(10.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](10,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(11.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(12.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](12,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(13.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(14.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](14,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(15.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(16.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](16,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(23,9.5)(21,8.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(23,9.5)(25,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](23,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(21,8)(20,6.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(21,8)(22,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](21,8){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(25,8)(24,6.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(25,8)(26,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](25,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(19.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(20.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](20,6){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(22,6)(21.5,4.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(22,6)(22.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](22,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(23.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(24.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](24,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(25.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(26.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](26,6){0.5}
     % Labels
     \rput(7,9.25){$X_{i_1}=1$}
     \rput(5.25,7.25){$X_{i_2}=0$}
     \rput(6.5,6.5){$t$}
     \rput(4.5,5){$X_{m}=0$}
     \rput(7.5,5){$X_{m}=1$}
-    % Side text
-    \rput[l](11,9){$\frac{1}{C_p^k}$ is the probability of}
-    \rput[l](11,8.25){the branch $B=\{X_{i_1}, X_{i_2}\}$}
-    \rput[l](11,7){$\frac{1}{p-k}$ is the probability of}
-    \rput[l](11,6.25){drawing $X_m$ given $B$}
+    \rput(18,7){...}
+    % % Side text
+    \rput[l](1,3){$\frac{1}{C_p^k}$ is the probability of the branch $B=\{X_{i_1}, X_{i_2}\}$}
+    \rput[l](1,2){$\frac{1}{p-k}$ is the probability of drawing $X_m$ given $B$}
     \end{pspicture}
 }
 \end{center}

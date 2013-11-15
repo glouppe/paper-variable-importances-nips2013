@@ -29,7 +29,7 @@ Paper available at http://orbi.ulg.ac.be/handle/2268/155642
 _Structure of the repository:_
 - `code/`: Demo and source code.
 - `paper/`: Latex files of the paper and supplementary materials.
--  poster/ : Latex files of the poster.
+- `poster/`: Latex files of the poster.
 
 _License:_ BSD 3 clause
 

@@ -322,8 +322,8 @@ Proof. (\textit{sketch})
     \rput(7.5,5){$X_{m}=1$}
     \rput(18,7){...}
     % % Side text
-    \rput[l](1,3){$\frac{1}{C_p^k}$ is the probability of the branch $B=\{X_{i_1}, X_{i_2}\}$}
-    \rput[l](1,2){$\frac{1}{p-k}$ is the probability of drawing $X_m$ given $B$}
+    \rput[l](1,3){$\frac{1}{C_p^k}$ is the probability of the branch $B=\{X_{i_1}, X_{i_2}\}$ (in {\color{lightblue} light blue})}
+    \rput[l](1,2){$\frac{1}{p-k}$ is the probability of drawing $X_m$ (in {\color{blue} blue}) given $B$}
     \end{pspicture}
 }
 \end{center}
@@ -425,6 +425,14 @@ exhaustive exploration of all interaction terms.
     from training samples drawn from $P(X_1, ..., X_7, Y)$.
 \end{minipage}
 
+\vspace{0.3cm}
+
+\textbf{Effect of randomization.} Variable importances at $K=1$ follow
+theoretical values of Theorem~1. However, as $K$ increases,  importances diverge due
+to masking effects. In accordance with Theorem~2, their sum is also always
+equal to $I(X_{1}, \ldots, X_{7}; Y) = H(Y) = \log_{2}(10)= 3.321$ since inputs
+allow to perfectly predict the output.
+
 \begin{center}
 \begin{table}
     \scalebox{0.8}{
@@ -448,21 +456,16 @@ exhaustive exploration of all interaction terms.
 \end{table}
 \end{center}
 
-Variable importances at $K=1$ follow their theoretical values,
-as predicted by Theorem~1. However, as $K$ increases,  importances diverge due
-to masking effects. In accordance with Theorem~2, their sum is also always
-equal to $I(X_{1}, \ldots, X_{7}; Y) = H(Y) = \log_{2}(10)= 3.321$ since inputs
-allow to perfectly predict the output
-
+\textbf{Decomposition.} Variable importances decompose along the
+degrees $k$ of interactions of one variable with the other ones. At $K=1$ (left), all
+$I(X_m;Y|B)$ are accounted for in the total importance, while at $K=7$ (right) only
+some of them are taken into account due to masking effects.
 
 \begin{center}
     \includegraphics[scale=0.65]{images/imp-led.pdf}
 \end{center}
 
-Decomposition of variable importances along the
-degrees $k$ of interactions of one variable with the other ones. At $K=1$ (left), all
-$I(X_m;Y|B)$ are accounted for in the total importance, while at $K=7$ (right) only
-some of them are taken into account due to masking effects.
+\vspace{-0.5cm}
 
 \end{block}
 

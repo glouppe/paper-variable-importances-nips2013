@@ -1,5 +1,6 @@
-\documentclass[handout]{beamer}
+\documentclass[final]{beamer}
 
+\usetheme{RJH}
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
 \usepackage{verbatim}
@@ -8,31 +9,123 @@
 \usepackage{hyperref}
 \usepackage{verbatim}
 \usepackage{url}
-% \usepackage{auto-pst-pdf}
-% \usepackage{pst-plot}
+\usepackage{auto-pst-pdf}
+\usepackage{pst-plot}
 
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
-\usetheme{boxes}
 \beamertemplatenavigationsymbolsempty
 \setbeamertemplate{sections/subsections in toc}[circle]
 
-\title{Understanding variables importances\\
-in forests of randomized trees {\it [Sun88]}\vspace{-3ex}}
-\author{{\small Gilles Louppe, Louis Wehenkel, Antonio Sutera and Pierre Geurts}}
+\definecolor{lightgreen}{rgb}{0.0,0.8,0.0}
+\definecolor{lightblue}{rgb}{0.3,0.8,1.0}
+\definecolor{lightred}{rgb}{0.874,0.180,0.105}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{lightgray}{rgb}{0.8,0.8,0.8}
+\definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
+
+\title{Understanding variables importances in forests of randomized trees}
+\author{{\small Gilles Louppe, Louis Wehenkel, Antonio Sutera and Pierre Geurts {\it [Sun88]}}}
 \date{}
+
 
 \begin{document}
 
 %% Slide 1 ==================================================================
 
 \begin{frame}
-\maketitle
+\begin{center}
+\scalebox{0.43}{
+    \begin{pspicture}(30,10)
+    % Grid
+    %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(5,9.5)(3,8.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(5,9.5)(7,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](5,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(2,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(4,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](3,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(7,8)(6,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(7,8)(8,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](7,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(1.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(2.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](2,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(3.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(4.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](4,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(6,6)(5.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(6,6)(6.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](6,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(7.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(8.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](8,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(13,9.5)(11,8.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(13,9.5)(15,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](13,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(11,8)(10,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(11,8)(12,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](11,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(14,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(16,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](15,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(9.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(10.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](10,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(11.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(12.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](12,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(13.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(14.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](14,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(15.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(16.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](16,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(23,9.5)(21,8.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(23,9.5)(25,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](23,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(21,8)(20,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(21,8)(22,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](21,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(25,8)(24,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(25,8)(26,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](25,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(19.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(20.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](20,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(22,6)(21.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(22,6)(22.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](22,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(23.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(24.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](24,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(25.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(26.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](26,6){0.5}
+    \rput(18,7){...}
+    \end{pspicture}
+}
+\end{center}
+
 \vfill
+
 \end{frame}
 
 
 %% Slide 2 ==================================================================
 
+\setbeamertemplate{headline}{}
 \begin{frame}
 
 \end{frame}

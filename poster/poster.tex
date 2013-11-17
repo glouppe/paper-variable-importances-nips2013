@@ -184,8 +184,9 @@ Decrease Impurity} (MDI) importance of an input variable $X_m$ is the
 sum of the weighted impurity decreases $p(t)\Delta i(t)$, for all nodes $t$
 where $X_m$ is used, averaged over all $N_T$ trees in the ensemble:
 \begin{align*}\label{eq:mdi}
-Imp(X_m) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(s_t) = X_m} p(t) \Delta i(t) &&\text{(1)}
+Imp(X_m) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(t) = X_m} p(t) \Delta i(t) &&\text{(1)}
 \end{align*}
+where $v(t)$ is the variable used to split node $t$.
 
 \vspace{0.3cm}
 

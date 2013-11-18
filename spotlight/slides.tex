@@ -26,7 +26,8 @@
 \definecolor{lightgray}{rgb}{0.8,0.8,0.8}
 \definecolor{shadecolor}{rgb}{0.9,0.9,0.9}
 
-\title{Understanding variable importances in forests of randomized trees}
+\title{Understanding variable importances\\[1ex]
+ in forests of randomized trees}
 \author{{\small Gilles Louppe, Louis Wehenkel, Antonio Sutera and Pierre Geurts {\it [Sun88]}}}
 \date{}
 
@@ -125,13 +126,11 @@
 
 \vspace{1cm}
 
-{\small
-\textbf{Random Forests} are a well-tested, efficient and versatile tool.\\
-Yet, they are still \textbf{not fully theoretically understood}.
-}
+\textbf{Random Forests} are a well-tested, efficient and versatile tool.
+
+Yet, they are {\color{red} still not fully \textbf{theoretically} understood}.
+
 \end{center}
-
-
 
 \end{frame}
 
@@ -141,7 +140,7 @@ Yet, they are still \textbf{not fully theoretically understood}.
 \setbeamertemplate{headline}{}
 \begin{frame}
 
-\vspace{-2.5cm}
+\vspace{-3.75cm}
 
 \begin{center}
 \scalebox{0.43}{
@@ -229,13 +228,15 @@ Yet, they are still \textbf{not fully theoretically understood}.
 
 \end{center}
 
-Variable importances were first proposed as a heuristic to assess the influence of input variables.
+\textbf{Variable importances} were first proposed {\color{red} as a heuristic}
+to assess the influence of input variables.
 
 \begin{align*}\label{eq:mdi}
-Imp({\color{blue} X_m}) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(t) = {\color{blue} X_m}} p(t) \Delta i(t)
+Imp(X_m) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(t) = X_m} p(t) \Delta i(t)
 \end{align*}
 
-In the case of totally randomized trees, variable importances actually show \textbf{sound and desirable theoretical properties}.
+In the case of totally randomized trees, variable importances actually show
+{\color{lightgreen} sound and desirable \textbf{theoretical} properties}.
 
 \end{frame}
 
@@ -244,8 +245,7 @@ In the case of totally randomized trees, variable importances actually show \tex
 
 \begin{frame}
 
-\vspace{-1.5cm}
-
+\vspace{-2.5cm}
 
 {\color{green} \cmark} Variable importances provide \textbf{a three-level decomposition of the
 information jointly provided by all the input variables about the output},
@@ -275,7 +275,7 @@ accounting for all interaction terms in a fair and exhaustive way.
 
 \begin{frame}
 
-\vspace{-1.5cm}
+\vspace{-3cm}
 
 {\color{green} \cmark} Variable importances \textbf{depend only on the relevant variables}.
 

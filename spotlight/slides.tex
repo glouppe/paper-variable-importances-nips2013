@@ -11,6 +11,9 @@
 \usepackage{url}
 \usepackage{auto-pst-pdf}
 \usepackage{pst-plot}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
 \hypersetup{colorlinks=true, linkcolor=black, urlcolor=blue}
 \beamertemplatenavigationsymbolsempty
@@ -33,6 +36,9 @@
 %% Slide 1 ==================================================================
 
 \begin{frame}
+
+\vspace{-1cm}
+
 \begin{center}
 \scalebox{0.43}{
     \begin{pspicture}(30,10)
@@ -116,9 +122,16 @@
     \rput(18,7){...}
     \end{pspicture}
 }
+
+\vspace{1cm}
+
+{\small
+\textbf{Random Forests} are a well-tested, efficient and versatile tool.\\
+Yet, they are still \textbf{not fully theoretically understood}.
+}
 \end{center}
 
-\vfill
+
 
 \end{frame}
 
@@ -128,6 +141,102 @@
 \setbeamertemplate{headline}{}
 \begin{frame}
 
+\vspace{-2.5cm}
+
+\begin{center}
+\scalebox{0.43}{
+    \begin{pspicture}(30,10)
+    % Grid
+    %\psgrid[subgriddiv=1,griddots=10,gridlabels=7pt]
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(5,9.5)(3,8.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(5,9.5)(7,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](5,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(2,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(3,8)(4,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](3,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(7,8)(6,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(7,8)(8,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](7,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(1.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(2,6)(2.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](2,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(3.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(4,6)(4.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](4,6){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(6,6)(5.5,4.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(6,6)(6.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](6,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(7.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(8,6)(8.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](8,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(13,9.5)(11,8.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(13,9.5)(15,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](13,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=blue]{->}(11,8)(10,6.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(11,8)(12,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](11,8){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(14,6.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(15,8)(16,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](15,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(9.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(10,6)(10.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](10,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(11.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(12,6)(12.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](12,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(13.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(14,6)(14.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](14,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(15.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(16,6)(16.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](16,6){0.5}
+    % Tree
+        % Level 0
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(23,9.5)(21,8.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(23,9.5)(25,8.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](23,9.5){0.5}
+        % Level 1
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(21,8)(20,6.5)
+        \psline[linewidth=2pt,linecolor=lightblue]{->}(21,8)(22,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightblue](21,8){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(25,8)(24,6.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(25,8)(26,6.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](25,8){0.5}
+        % Level 2
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(19.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(20,6)(20.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](20,6){0.5}
+        \psline[linewidth=2pt,linecolor=blue]{->}(22,6)(21.5,4.5)
+        \psline[linewidth=2pt,linecolor=blue]{->}(22,6)(22.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=blue](22,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(23.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(24,6)(24.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](24,6){0.5}
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(25.5,4.5)
+        \psline[linewidth=2pt,linecolor=lightgray]{->}(26,6)(26.5,4.5)
+        \pscircle[fillstyle=solid,fillcolor=white,linewidth=2pt,linecolor=lightgray](26,6){0.5}
+    \rput(18,7){...}
+    \end{pspicture}
+}
+
+\end{center}
+
+Variable importances were first proposed as a heuristic to assess the influence of input variables.
+
+\begin{align*}\label{eq:mdi}
+Imp({\color{blue} X_m}) &= \frac{1}{N_T} \sum_{T} \sum_{t \in T:v(t) = {\color{blue} X_m}} p(t) \Delta i(t)
+\end{align*}
+
+... and they actually show \textbf{sound and desirable properties}.
+
 \end{frame}
 
 
@@ -135,12 +244,48 @@
 
 \begin{frame}
 
+\vspace{-1.5cm}
+
+
+{\color{green} \cmark} Variable importances provide \textbf{a three-level decomposition of the
+information jointly provided by all the input variables about the output},
+accounting for all interaction terms in a fair and exhaustive way.
+
+\vspace{-0.5cm}
+
+\begin{flalign*}
+\text{\textbf{Thm.~1:}} &\quad Imp(X_m)=\underbrace{\sum_{k=0}^{p-1} \frac{1}{C_p^k} \frac{1}{p-k}}_{{\color{lightblue} \substack{\text{ii) Decomposition along}\\
+                                                                                                 \text{the degrees $k$ of interaction}\\
+                                                                                                 \text{with the other variables}}}}
+       \underbrace{\sum_{B \in {\cal P}_k(V^{-m})} I(X_m;Y|B)}_{{\color{lightred} \substack{\text{iii) Decomposition along all}\\
+                                                                                            \text{interaction terms $B$}\\
+                                                                                            \text{of a given degree $k$}}}}\\
+\text{\textbf{Thm.~2:}} &\quad \underbrace{\sum_{m=1}^{p}Imp(X_m)}_{{\color{lightgreen} \substack{\text{i) Decomposition in terms of}\\
+                                                                   \text{the MDI importance of}\\
+                                                                   \text{each input variable}}}} =
+\underbrace{I(X_{1}, \ldots, X_{p} ; Y)}_{\substack{\text{Information jointly provided}\\
+                                                    \text{by all input variables}\\
+                                                    \text{about the output}}}
+\end{flalign*}
+
 \end{frame}
 
 
 %% Slide 4 ==================================================================
 
 \begin{frame}
+
+\vspace{-1.5cm}
+
+{\color{green} \cmark} Variable importances \textbf{depend only on the relevant variables}.
+
+\vspace{1cm}
+
+\textbf{Thm.~3:} A variable is irrelevant if and only if its importance is 0.
+
+\vspace{1cm}
+
+\textbf{Thm.~5:} The importance of a relevant variable is insensitive to the addition or the removal of irrelevant variables.
 
 \end{frame}
 

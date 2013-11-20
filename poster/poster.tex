@@ -43,6 +43,11 @@
 \footer{}
 \date{}
 
+\makeatletter
+\newcommand{\superimpose}[2]{%
+  {\ooalign{$#1\@firstoftwo#2$\cr\hfil$#1\@secondoftwo#2$\hfil\cr}}}
+\makeatother
+
 \begin{document}
 \begin{frame}{}
 
@@ -375,16 +380,6 @@ trees built on $V_R$ for $Y$ is the same as its importance computed in the same 
 
 \begin{textblock}{0.32}(0.67,0.14)
 
-\begin{block}{Non-totally randomized trees \phantom{p}}
-
-{\color{red} \xmark} Because of masking effects due to the non-totally random
-choices of split variables, \textbf{Theorems 1, 3 and 5 do not apply for Random Forests}
-and variants. Increasing $K$ (aka. \textit{mtry} or \textit{max\_features} -- the number of variables drawn
-to maximize $\Delta i$) makes importance scores diverge from a fair and
-exhaustive exploration of all interaction terms.
-
-\end{block}
-
 \begin{block}{Illustration \phantom{p}}
 
 \begin{minipage}{\linewidth}
@@ -428,7 +423,8 @@ exhaustive exploration of all interaction terms.
 
 \vspace{0.3cm}
 
-\textbf{Effect of randomization.} Variable importances at $K=1$ follow
+\textbf{Effect of randomization.} Let $K$ (aka. \texttt{mtry} or \texttt{max\_features}) be the number of variables
+drawn to maximize $\Delta i$. Variable importances at $K=1$ follow
 theoretical values of Theorem~1. However, as $K$ increases,  importances diverge due
 to masking effects. In accordance with Theorem~2, their sum is also always
 equal to $I(X_{1}, \ldots, X_{7}; Y) = H(Y) = \log_{2}(10)= 3.321$ since inputs
@@ -466,10 +462,14 @@ some of them are taken into account due to masking effects.
     \includegraphics[scale=0.65]{images/imp-led.pdf}
 \end{center}
 
-\vspace{-0.5cm}
+{\color{red} \xmark} Because of masking effects due to the non-totally random
+choices of split variables, \textbf{Theorems 1, 3 and 5 do not apply for Random Forests}
+and variants. Increasing $K$ makes importance scores diverge from a fair and
+exhaustive exploration of all interaction terms.
 
 \end{block}
 
+\vspace{0.5cm}
 \begin{block}{Conclusions \phantom{p}}
 
 {\color{green} \cmark} First step towards understanding variable importances, as computed with a forest of totally randomized trees.
@@ -483,9 +483,9 @@ some of them are taken into account due to masking effects.
 \item[-] it depends only on the relevant variables;
 \end{itemize}
 
-{\color{blue} ?} Fully formalize variable importances of actual Random Forests and variants.
+{\color{blue} $\Box$} Fully formalize variable importances of actual Random Forests and variants.
 
-{\color{blue} ?} Characterize the distribution of variable importances in a finite setting.
+{\color{blue} $\Box$} Characterize the distribution of variable importances in a finite setting.
 
 
 \end{block}

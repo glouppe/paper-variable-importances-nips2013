@@ -1,7 +1,7 @@
 Understanding variable importances in forests of randomized trees
 =================================================================
 
-* Gilles Louppe <g.louppe@ulg.ac.be>
+* Gilles Louppe <g.louppe@gmail.com>
 * Louis Wehenkel <l.wehenkel@ulg.ac.be>
 * Antonio Sutera <a.sutera@ulg.ac.be>
 * Pierre Geurts <p.geurts@ulg.ac.be>

@@ -24,6 +24,18 @@ Extra-Trees.
 
 Paper available at http://orbi.ulg.ac.be/handle/2268/155642
 
+Please cite using the following BibTex entry:
+
+```
+@inproceedings{louppe2013understanding,
+  title={Understanding variable importances in forests of randomized trees},
+  author={Louppe, Gilles and Wehenkel, Louis and Sutera, Antonio and Geurts, Pierre},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={431--439},
+  year={2013}
+}
+```
+
 ---
 
 _Structure of the repository:_
